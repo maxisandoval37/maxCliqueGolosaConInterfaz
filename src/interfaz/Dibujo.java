@@ -1,0 +1,41 @@
+package interfaz;
+
+import negocio.Enlace;
+import negocio.Nodo;
+import java.awt.Graphics;
+
+public class Dibujo {
+
+	public static void pintarEnlance(Graphics g, Enlace e) {
+		g.drawLine(e.getX1(), e.getY1(), e.getX2(), e.getY2());
+
+		if (e.getX1() > e.getX2() && e.getY1() > e.getY2()) {
+			g.drawString(e.getNombre(), e.getX1() - Math.abs((e.getX1() - e.getX2()) / 2),
+					e.getY1() - Math.abs((e.getY1() - e.getY2()) / 2));
+		}
+		if (e.getX1() < e.getX2() && e.getY1() < e.getY2()) {
+			g.drawString(e.getNombre(), e.getX2() - Math.abs((e.getX1() - e.getX2()) / 2),
+					e.getY2() - Math.abs((e.getY1() - e.getY2()) / 2));
+		}
+
+		if (e.getX1() > e.getX2() && e.getY1() < e.getY2()) {
+			g.drawString(e.getNombre(), e.getX1() - Math.abs((e.getX1() - e.getX2()) / 2),
+					e.getY2() - Math.abs((e.getY1() - e.getY2()) / 2));
+		}
+
+		if (e.getX1() < e.getX2() && e.getY1() > e.getY2()) {
+			g.drawString(e.getNombre(), e.getX2() - Math.abs((e.getX1() - e.getX2()) / 2),
+					e.getY1() - Math.abs((e.getY1() - e.getY2()) / 2));
+		}
+	}
+	
+	public static void pintarNodo (Graphics g,Nodo n) {
+		g.drawOval(n.getX()-Nodo.d/2, n.getY()-Nodo.d/2, Nodo.d, Nodo.d);
+		
+		if (n.getNombre() == null)
+			g.drawString("",n.getX(),n.getY());
+		else
+			g.drawString(n.getNombre(),n.getX(),n.getY());
+	}
+
+}
