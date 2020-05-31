@@ -3,15 +3,17 @@ package negocio;
 public class Nodo {
 
 	private int x,y;
-	public static final int d=60;//diametro del circulo
-	private String nombre;
-	
-	
-	public Nodo(int x, int y,String nombre) {
+	public static final int diametroCirculo=60;
+	private Integer peso;
+	private int indice_nodo;
+	//private static Integer indiceNodo=-1;
+
+	public Nodo(int indice_nodo,int x, int y,int peso) {
 		super();
 		this.x = x;
 		this.y = y;
-		this.setNombre(nombre);
+		this.indice_nodo = indice_nodo;
+		this.setPeso(peso);
 	}
 	
 	public int getX() {
@@ -30,14 +32,16 @@ public class Nodo {
 		this.y = y;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public Integer getPeso() {
+		return peso;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setPeso(Integer peso) {
+		this.peso = peso;
 	}
 
-	
+	public int getIndiceNodo() {
+		return indice_nodo;
+	}
 	
 }

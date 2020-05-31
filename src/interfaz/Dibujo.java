@@ -1,12 +1,12 @@
 package interfaz;
 
-import negocio.Enlace;
+import negocio.Arista;
 import negocio.Nodo;
 import java.awt.Graphics;
 
 public class Dibujo {
 
-	public static void pintarEnlance(Graphics g, Enlace e) {
+	public static void pintarEnlance(Graphics g, Arista e) {
 		g.drawLine(e.getX1(), e.getY1(), e.getX2(), e.getY2());
 
 		if (e.getX1() > e.getX2() && e.getY1() > e.getY2()) {
@@ -30,12 +30,12 @@ public class Dibujo {
 	}
 	
 	public static void pintarNodo (Graphics g,Nodo n) {
-		g.drawOval(n.getX()-Nodo.d/2, n.getY()-Nodo.d/2, Nodo.d, Nodo.d);
+		g.drawOval(n.getX()-Nodo.diametroCirculo/2, n.getY()-Nodo.diametroCirculo/2, Nodo.diametroCirculo, Nodo.diametroCirculo);
 		
-		if (n.getNombre() == null)
+		if (n.getPeso()==null)
 			g.drawString("",n.getX(),n.getY());
 		else
-			g.drawString(n.getNombre(),n.getX(),n.getY());
+			g.drawString(n.getPeso().toString(),n.getX(),n.getY());
 	}
 
 }

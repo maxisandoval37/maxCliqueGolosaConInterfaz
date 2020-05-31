@@ -1,6 +1,7 @@
 package negocio;
 
-public class Clique {
+import java.util.ArrayList;
+import java.util.Collections;
 	
 	
 //	public void Clique (Grafo grafo) {
@@ -39,4 +40,20 @@ public class Clique {
 	//	
 	//	
 	//	
+
+
+
+	public class Clique {
+
+	    ArrayList<Nodo> listaNodo;
+
+	    public Clique () {
+	        listaNodo = new ArrayList<Nodo>();
+	    }
+
+	    public void agregarNodo(Nodo nodo) {
+	        listaNodo.add(nodo);
+	    }
+
+	
 }
