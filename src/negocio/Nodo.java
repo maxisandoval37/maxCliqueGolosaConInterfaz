@@ -3,10 +3,9 @@ package negocio;
 public class Nodo {
 
 	private int x,y;
-	public static final int diametroCirculo=60;
+	public static final int diametroCirculo=100;
 	private Integer peso;
 	private int indice_nodo;
-	//private static Integer indiceNodo=-1;
 
 	public Nodo(int indice_nodo,int x, int y,int peso) {
 		super();

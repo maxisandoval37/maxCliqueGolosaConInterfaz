@@ -1,7 +1,6 @@
 package negocio;
 
 import java.util.ArrayList;
-import java.util.Collections;
 	
 	
 //	public void Clique (Grafo grafo) {

@@ -35,7 +35,7 @@ public class Dibujo {
 		if (n.getPeso()==null)
 			g.drawString("",n.getX(),n.getY());
 		else
-			g.drawString(n.getPeso().toString(),n.getX(),n.getY());
+			g.drawString("P("+n.getPeso()+") // i:("+n.getIndiceNodo()+")",n.getX()-Nodo.diametroCirculo/3,n.getY());
 	}
 
 }

@@ -47,9 +47,9 @@ public class Lienzo extends JPanel implements MouseListener{
 	public void mouseClicked(MouseEvent e){
 		
 		if (e.getButton() == MouseEvent.BUTTON1) {//nodo
-			Integer peso = Integer.parseInt(JOptionPane.showInputDialog("INGRESE UN PESO: "));
+			Integer peso = Integer.parseInt(JOptionPane.showInputDialog("INGRESE UN PESO PARA EL NODO: ")+0);
 			indiceAuxCrearNodo++;
-			Nodo nodo = new Nodo(indiceAuxCrearNodo,e.getX(),e.getY(),peso);
+			Nodo nodo = new Nodo(indiceAuxCrearNodo,e.getX(),e.getY(),peso/10);
 			this.vectorNodos.add(nodo);
 			
 			grafo.agregarNodo(nodo);
@@ -60,7 +60,6 @@ public class Lienzo extends JPanel implements MouseListener{
 
 				for (int i=0; i<vectorNodos.size();i++) {
 
-
 				if (new Rectangle (vectorNodos.get(i).getX()-Nodo.diametroCirculo/2,vectorNodos.get(i).getY()-Nodo.diametroCirculo/2,Nodo.diametroCirculo,Nodo.diametroCirculo).contains(e.getPoint())) {
 					if (p1==null) {
 						p1=new Point (vectorNodos.get(i).getX(),vectorNodos.get(i).getY());
@@ -69,14 +68,14 @@ public class Lienzo extends JPanel implements MouseListener{
 					}
 					else {
 						p2=new Point (vectorNodos.get(i).getX(),vectorNodos.get(i).getY());
-						String nombre = JOptionPane.showInputDialog("INGRESE UN NOMBRE: ");
+						String nombre = JOptionPane.showInputDialog("INGRESE UN NOMBRE PARA LA ARISTA: ");
 						this.vectorAristas.add(new Arista(p1.x,p1.y,p2.x,p2.y,nombre));
 
 						indice2auxNodo=vectorNodos.get(i).getIndiceNodo();
 						
-						if (indice1auxNodo != indice2auxNodo) { //*
+						if (indice1auxNodo != indice2auxNodo) { 
 							System.out.println(indice1auxNodo+" "+indice2auxNodo);
-							grafo.agregarArista(indice1auxNodo, indice2auxNodo);//*
+							grafo.agregarArista(indice1auxNodo, indice2auxNodo);
 						}
 						
 						repaint();
@@ -85,7 +84,6 @@ public class Lienzo extends JPanel implements MouseListener{
 					}
 				}
 			}
-
 			
 		}
 		

@@ -27,7 +27,6 @@ public class Grafo {
 	}
 	
 	public void agregarArista(int i, int j) {
-		//listaNodos.add(nodo);
 		verificarArista(i, j);
 
 		_vecinos.get(i).add(j);
