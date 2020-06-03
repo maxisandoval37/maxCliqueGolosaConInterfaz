@@ -20,6 +20,7 @@ public class Lienzo extends JFrame implements MouseListener {
 	static int indice1auxNodo = -1;
 	static int indice2auxNodo = -1;
 	private JPanel panelBotones;
+	private JPanel panelDibujar;
 	private JButton botonResolver;
 	ComparadorPorPeso comparaPorPeso;
 	ComparadorPorGrado comparaPorGrado;
@@ -37,7 +38,7 @@ public class Lienzo extends JFrame implements MouseListener {
 		this.vectorAristas = new Vector<>();
 		this.addMouseListener(this);
 		getContentPane().setLayout(null);
-
+		
 	}
 	
 	private void initialize() {
@@ -45,6 +46,7 @@ public class Lienzo extends JFrame implements MouseListener {
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 100, 1000, 800);
 		ventana.getContentPane().setLayout(null);
+		inicializarPanelDibujar();
 		inicializarPanelBotones();
 	}
 
@@ -52,7 +54,7 @@ public class Lienzo extends JFrame implements MouseListener {
 	public void paint(Graphics g) {
 		super.paint(g);
 		for (Nodo nodo : vectorNodos) {
-			Dibujo.pintarNodo(g, nodo);
+			Dibujo.pintarNodo(g, nodo,panelDibujar.getWidth(),panelDibujar.getHeight());
 		}
 		for (Arista enlaces : vectorAristas) {
 			Dibujo.pintarEnlance(g, enlaces);
@@ -72,7 +74,7 @@ public class Lienzo extends JFrame implements MouseListener {
 				grafo.agregarNodo(nodo);
 				repaint();
 			} else {
-				JOptionPane.showMessageDialog(null, "DEBE INGRESAR UN DATO NÚMERICO PARA EL NODO");
+				JOptionPane.showMessageDialog(null, "DEBE INGRESAR UN DATO NUMERICO PARA EL NODO");
 			}
 		}
 
@@ -147,11 +149,18 @@ public class Lienzo extends JFrame implements MouseListener {
 	private void inicializarPanelBotones() {
 		panelBotones= new JPanel();
 		panelBotones.setBackground(Color.GRAY);
-		panelBotones.setBounds(680, 11, 201, 362);
+		panelBotones.setBounds(780, 15, 201, 745);
 		getContentPane().add(panelBotones);
 		inicializarBotonResolver();
 	}
-
+	
+	
+	private void inicializarPanelDibujar() {
+		panelDibujar = new JPanel();
+		panelDibujar.setBackground(Color.GRAY);
+		panelDibujar.setBounds(10, 15, 700, 745);
+		getContentPane().add(panelDibujar);
+	}
 	private void inicializarBotonResolver() {
 		botonResolver = new JButton("Resolver clique max peso");
 		botonResolver.setBounds(500, 500, 100, 30);

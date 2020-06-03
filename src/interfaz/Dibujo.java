@@ -29,13 +29,20 @@ public class Dibujo {
 		}
 	}
 	
-	public static void pintarNodo (Graphics g,Nodo n) {
+	public static void pintarNodo (Graphics g,Nodo n,int limiteX, int limiteY) {
+		
+		if (n.getX() < limiteX && n.getY() <limiteY) {
+		
 		g.drawOval(n.getX()-Nodo.diametroCirculo/2, n.getY()-Nodo.diametroCirculo/2, Nodo.diametroCirculo, Nodo.diametroCirculo);
 		
 		if (n.getPeso()==null)
 			g.drawString("",n.getX(),n.getY());
 		else
 			g.drawString("P("+n.getPeso()+") // i:("+n.getIndiceNodo()+")",n.getX()-Nodo.diametroCirculo/3,n.getY());
+		}
+		else {
+			System.out.println("Oops me pasé");
+		}
 	}
 
 }
