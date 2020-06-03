@@ -6,7 +6,12 @@ public class ComparadorPorGrado implements Comparator<Nodo> {
 
 	@Override
 	public int compare(Nodo uno, Nodo otro) {
-		return -uno.getCantidadVecinos()+otro.getCantidadVecinos();
+		if(uno.getCantidadVecinos()==otro.getCantidadVecinos())
+            return 0;
+        if(uno.getCantidadVecinos()>otro.getCantidadVecinos())
+            return -1;
+        else
+            return 1;
 	}
 
 }
