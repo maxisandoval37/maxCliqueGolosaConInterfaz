@@ -1,58 +1,44 @@
 package negocio;
 
 import java.util.ArrayList;
-	
-	
-//	public void Clique (Grafo grafo) {
-//		
-//	}
-	
-	
-	//ListCliques = contieneTodasLasCliques
-	// int pesoMaxClique=0;
-	//
-	//listaConUnion = ListCliques.add( NodoAux union); //AMEO' ETE E' EL RESULTADO
-	//public void Solver(){
-	//cliqueMaxima = null;
-	
-	//lista nodosOrdenados = ORDENAMOS GRAFO (DE MAYOR A MENOR PESO)
-	// for (nodo n: nodosOrdenados){
-	//		NodoAux = n.listaVecinosOrdenada(0); 
-	//		listaConInterseccion = ListNodosOrdenados.add( N.vecinos intersect NodoAux.vecinos);
-	//		findClique (listaConInterseccion,listaConUnion);
-	//		if (NodoAux.peso>pesoMaxClique){
-	//			pesoMaxClique = NodoAux.peso; 
-	//			cliqueMaxima = listaConUnion;
-	//		}
-	//}
-	// return cliqueMaxima;
-	
-	
-	
-	
-	//		findClique (listaConInterseccion,listaConUnion){
-	//			listaConUnion.add(listaConInterseccion.get(0)) //esta es la clique que estamos armando
-	//			listaConInterseccion ();
-	//				
-	//		findClique (listaConInterseccion,listaConUnion)
-	//	}
-	//	
-	//	
-	//	
 
+public class Clique {
 
+	ArrayList<Nodo> listaNodo;
+	private int peso;
 
-	public class Clique {
+	public Clique() {
+		listaNodo = new ArrayList<Nodo>();
+		this.setPeso(0);
 
-	    ArrayList<Nodo> listaNodo;
+	}
 
-	    public Clique () {
-	        listaNodo = new ArrayList<Nodo>();
-	    }
+	public void agregarNodoAClique(Nodo nodo, Grafo grafo) {
 
-	    public void agregarNodo(Nodo nodo) {
-	        listaNodo.add(nodo);
-	    }
+		if (!listaNodo.contains(nodo) && esVecinodeTodos(nodo, grafo)) {
+			listaNodo.add(nodo);
+			this.setPeso(this.getPeso() + nodo.getPeso());
+		}
+	}
 
-	
+	private boolean esVecinodeTodos(Nodo nodo, Grafo grafo) {
+		boolean ret = true;
+		for (Nodo iteracion : listaNodo) {
+			ret = ret && grafo.getindiceConVecinos().get(iteracion.getIndiceNodo()).contains(nodo);
+		}
+		return ret;
+	}
+
+	public ArrayList<Nodo> getListaNodo() {
+		return listaNodo;
+	}
+
+	public int getPeso() {
+		return peso;
+	}
+
+	public void setPeso(int peso) {
+		this.peso = peso;
+	}
+
 }

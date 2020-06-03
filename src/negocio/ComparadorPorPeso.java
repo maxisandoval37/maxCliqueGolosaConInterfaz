@@ -6,7 +6,9 @@ public class ComparadorPorPeso implements Comparator<Nodo>{
 
     @Override
     public int compare (Nodo uno , Nodo otro) {
-        return -uno.getPeso() + otro.getPeso();
+    	return   -uno.getPeso() + otro.getPeso();
     }
+
+	
 
 }
