@@ -1,16 +1,12 @@
 package interfaz;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.*;
 import negocio.*;
 import javax.swing.*;
 
 public class Lienzo extends JFrame implements MouseListener {
-
+	
 	private static final long serialVersionUID = 1L;
 	public JFrame ventana;
 	private Vector<Nodo> vectorNodos;
@@ -24,13 +20,13 @@ public class Lienzo extends JFrame implements MouseListener {
 	private JButton botonResolver;
 	ComparadorPorPeso comparaPorPeso;
 	ComparadorPorGrado comparaPorGrado;
-
+	private Color colorNodos;
 	public Grafo grafo;
 
 	public Lienzo() {
-
 		initialize();
 		
+		colorNodos = Color.black;
 		comparaPorPeso = new ComparadorPorPeso();
 		comparaPorGrado = new ComparadorPorGrado();
 		grafo = new Grafo(20);
@@ -38,7 +34,6 @@ public class Lienzo extends JFrame implements MouseListener {
 		this.vectorAristas = new Vector<>();
 		this.addMouseListener(this);
 		getContentPane().setLayout(null);
-		
 	}
 	
 	private void initialize() {
@@ -54,11 +49,12 @@ public class Lienzo extends JFrame implements MouseListener {
 	public void paint(Graphics g) {
 		super.paint(g);
 		for (Nodo nodo : vectorNodos) {
-			Dibujo.pintarNodo(g, nodo,panelDibujar.getWidth(),panelDibujar.getHeight());
+			Dibujo.pintarNodo(g, nodo, panelDibujar.getWidth(), panelDibujar.getHeight(), colorNodos);
 		}
 		for (Arista enlaces : vectorAristas) {
 			Dibujo.pintarEnlance(g, enlaces);
 		}
+		colorNodos = Color.black;
 	}
 
 	@Override
@@ -79,7 +75,6 @@ public class Lienzo extends JFrame implements MouseListener {
 		}
 
 		if (e.getButton() == MouseEvent.BUTTON3) {// arista
-
 			for (int i = 0; i < vectorNodos.size(); i++) {
 
 				if (new Rectangle(vectorNodos.get(i).getX() - Nodo.diametroCirculo / 2,
@@ -87,29 +82,24 @@ public class Lienzo extends JFrame implements MouseListener {
 						Nodo.diametroCirculo).contains(e.getPoint())) {
 					if (p1 == null) {
 						p1 = new Point(vectorNodos.get(i).getX(), vectorNodos.get(i).getY());
-
 						indice1auxNodo = vectorNodos.get(i).getIndiceNodo();
 					} else {
 						p2 = new Point(vectorNodos.get(i).getX(), vectorNodos.get(i).getY());
 						String nombre = JOptionPane.showInputDialog("INGRESE UN NOMBRE PARA LA ARISTA: ");
 						if (nombre != null) {
 							this.vectorAristas.add(new Arista(p1.x, p1.y, p2.x, p2.y, nombre));
-
 							indice2auxNodo = vectorNodos.get(i).getIndiceNodo();
 
 							if (indice1auxNodo != indice2auxNodo) {
-								System.out.println(indice1auxNodo + " " + indice2auxNodo);
 								grafo.agregarArista(indice1auxNodo, indice2auxNodo);
 								if (indice1auxNodo != -1 && indice2auxNodo != -1
-										&& indice1auxNodo <= grafo.getListaNodos().size()
-										&& indice2auxNodo <= grafo.getListaNodos().size()) {
+									&& indice1auxNodo <= grafo.getListaNodos().size()
+									&& indice2auxNodo <= grafo.getListaNodos().size()) {
 
 									grafo.agregarNodoAindiceConVecinos(grafo.getListaNodos().get(indice1auxNodo),
-											grafo.getListaNodos().get(indice2auxNodo));
+									grafo.getListaNodos().get(indice2auxNodo));
 								}
-
 							}
-
 							repaint();
 							p1 = null;
 							p2 = null;
@@ -117,32 +107,8 @@ public class Lienzo extends JFrame implements MouseListener {
 							JOptionPane.showMessageDialog(null, "DEBE INGRESAR UN NOMBRE PARA LA ARISTA");
 						}
 					}
-
 				}
 			}
-
-		}
-		if (e.getButton() == MouseEvent.BUTTON2) {
-			System.out.println("boton 2");
-
-			Solver solver = new Solver(comparaPorPeso, grafo);
-			Solver solver2 = new Solver(comparaPorGrado, grafo);
-
-			Clique clique = solver.resolver();
-			Clique clique2 = solver2.resolver();
-			Clique aux;
-
-			if (clique.getPeso() > clique2.getPeso()) {
-				aux = clique;
-			} else {
-				aux = clique2;
-
-			}
-
-			for (Nodo cli : aux.getListaNodo()) {
-				System.out.println(cli.getIndiceNodo() + " <-");
-			}
-
 		}
 	}
 
@@ -153,7 +119,6 @@ public class Lienzo extends JFrame implements MouseListener {
 		getContentPane().add(panelBotones);
 		inicializarBotonResolver();
 	}
-	
 	
 	private void inicializarPanelDibujar() {
 		panelDibujar = new JPanel();
@@ -166,7 +131,6 @@ public class Lienzo extends JFrame implements MouseListener {
 		botonResolver.setBounds(500, 500, 100, 30);
 		panelBotones.add(botonResolver);
 		accionBotonResolver();
-
 	}
 
 	private void accionBotonResolver() {
@@ -174,13 +138,28 @@ public class Lienzo extends JFrame implements MouseListener {
 			public void actionPerformed(ActionEvent e) {
 				Solver solver = new Solver(comparaPorPeso,grafo);
 				Clique clique = solver.resolver();
-
-				for (Nodo cli : clique.getListaNodo()) {
-					System.out.println(cli.getIndiceNodo() + " <-");
-				}
-
+				limpiarElemsDeLaPantalla();
+				repaint();
+	
+				for (int i=0;i<clique.getListaNodo().size()-1;i++) {
+					colorNodos = Color.blue;
+					vectorNodos.add(clique.getListaNodo().get(i));
+					vectorNodos.add(clique.getListaNodo().get(clique.getListaNodo().size()-1));
+					
+					vectorAristas.add(new Arista(clique.getListaNodo().get(i).getX(),clique.getListaNodo().get(i).getY(), 
+					clique.getListaNodo().get(i+1).getX(),clique.getListaNodo().get(i+1).getY(), ""));
+					
+					vectorAristas.add(new Arista(clique.getListaNodo().get(0).getX(),clique.getListaNodo().get(0).getY(), 
+					clique.getListaNodo().get(clique.getListaNodo().size()-1).getX(),
+					clique.getListaNodo().get(clique.getListaNodo().size()-1).getY(), ""));
+				}repaint();
 			}
 		});
+	}
+	
+	private void limpiarElemsDeLaPantalla() {//VER SI HAY QUE LIMPIAR OTRA COSA TAMBIEN
+		vectorNodos.clear();
+		vectorAristas.clear();
 	}
 	
 	private boolean sonTodosNumeros(String cad) {
@@ -193,26 +172,11 @@ public class Lienzo extends JFrame implements MouseListener {
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
+	public void mouseEntered(MouseEvent arg0) {}
 	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
+	public void mouseExited(MouseEvent arg0) {}
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
+	public void mousePressed(MouseEvent arg0) {}
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mouseReleased(MouseEvent arg0) {}
 }
