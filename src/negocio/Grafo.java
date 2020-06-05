@@ -10,25 +10,22 @@ import java.util.Set;
 public class Grafo {
 	private ArrayList<Set<Integer>> _vecinos;
 	public ArrayList<Nodo> _listaNodos;
-	private HashMap<Integer, ArrayList<Nodo>> indiceConVecinos;
-	private int _cantVertices;
+	private HashMap<Integer, ArrayList<Nodo>> _indiceConVecinos;
+	private int _capacidadAristas; 
+	private int _cantArisActuales;
 
-
-	public Grafo(int vertices) { // limite de vertices que le podemos agregar al grafo
-
-		_vecinos = new ArrayList<Set<Integer>>(vertices);
-
-		indiceConVecinos = new HashMap<Integer, ArrayList<Nodo>>();
-
+	public Grafo(int vertices) {
+		_capacidadAristas = (vertices * (vertices-1)) /2 ;
+		System.out.println(_capacidadAristas + " "+_capacidadAristas);
+		_vecinos = new ArrayList<Set<Integer>>(_capacidadAristas);
+		_indiceConVecinos = new HashMap<Integer, ArrayList<Nodo>>();
 		_listaNodos = new ArrayList<Nodo>();
-
-
 		setListaNodos(new ArrayList<Nodo>());
 
-		for (int i = 0; i < vertices; i++)
+		for (int i = 0; i < _capacidadAristas; i++)
 			_vecinos.add(new HashSet<Integer>());
 
-		_cantVertices = vertices;
+		_capacidadAristas = vertices;
 	}
 
 	public void agregarNodo(Nodo nodo) {
@@ -38,98 +35,81 @@ public class Grafo {
 	}
 
 	public void agregarNodoAindiceConVecinos(Nodo nodo1, Nodo nodo2) {
-
 		if (!getindiceConVecinos().containsKey(nodo1.getIndiceNodo())) {
 			ArrayList<Nodo> auxiliar = new ArrayList<Nodo>();
 			auxiliar.add(nodo2);
-			this.indiceConVecinos.put(nodo1.getIndiceNodo(), auxiliar);
+			this._indiceConVecinos.put(nodo1.getIndiceNodo(), auxiliar);
 			nodo1.aumentarCantVecinos();
 		}
-
 		else {
-
 			if (!obtenerVecinos(nodo1).contains(nodo2)) {
 				ArrayList<Nodo> auxiliar = new ArrayList<Nodo>();
 				auxiliar.addAll(getindiceConVecinos().get(nodo1.getIndiceNodo()));
 				auxiliar.add(nodo2);
-				this.indiceConVecinos.put(nodo1.getIndiceNodo(), auxiliar);
+				this._indiceConVecinos.put(nodo1.getIndiceNodo(), auxiliar);
 				nodo1.aumentarCantVecinos();
 			}
-
 		}
-
 		if (!getindiceConVecinos().containsKey(nodo2.getIndiceNodo())) {
 			ArrayList<Nodo> auxiliar2 = new ArrayList<Nodo>();
 			auxiliar2.add(nodo1);
-			this.indiceConVecinos.put(nodo2.getIndiceNodo(), auxiliar2);
+			this._indiceConVecinos.put(nodo2.getIndiceNodo(), auxiliar2);
 			nodo2.aumentarCantVecinos();
-
 		} else {
-
 			if (!obtenerVecinos(nodo2).contains(nodo1)) {
 
 				ArrayList<Nodo> auxiliar2 = new ArrayList<Nodo>();
 				auxiliar2.addAll(getindiceConVecinos().get(nodo2.getIndiceNodo()));
 				auxiliar2.add(nodo1);
-				this.indiceConVecinos.put(nodo2.getIndiceNodo(), auxiliar2);
+				this._indiceConVecinos.put(nodo2.getIndiceNodo(), auxiliar2);
 				nodo2.aumentarCantVecinos();
-
 			}
-
 		}
-
 	}
 
 	public void agregarArista(int i, int j) {
 		verificarArista(i, j);
-
+		_cantArisActuales++;
 		_vecinos.get(i).add(j);
 		_vecinos.get(j).add(i);
 	}
 
 	public void eliminarArista(int i, int j) {
 		verificarArista(i, j);
-
 		_vecinos.get(i).remove(j);
 		_vecinos.get(j).remove(i);
-
 	}
 
 	public boolean existeArista(int i, int j) {
 		verificarArista(i, j);
-
 		return _vecinos.get(i).contains(j);
 	}
 
 	public Set<Integer> getVecinos(int i) {
 		verificarVertice(i);
-
 		return _vecinos.get(i);
 	}
 
-	public int grado(int i) {
-		return _vecinos.get(i).size();
+	private void verificarVertice(int i) {
+		if (i < 0 || i >=  _capacidadAristas)
+			throw new IllegalArgumentException("Se intento usar valores fuera de rango");
 	}
-
+	
 	private void verificarArista(int i, int j) {
 		if (i == j)
 			throw new IllegalArgumentException("no se puede operar con dos aristas iguales");
 
 		verificarVertice(i);
-
 		verificarVertice(j);
-
 	}
 
-	private void verificarVertice(int i) {
-		if (i < 0 || i >= _cantVertices)
-			throw new IllegalArgumentException("Se intento usar valores fuera de rango");
+	public int capacidadDeAristas() {
+		return _capacidadAristas;
 	}
 
-	public int cantidadVertices() {
-		return _cantVertices;
+	public int cantidadAristasActuales() {
+		return _cantArisActuales;
 	}
-
 
 	public ArrayList<Nodo> getListaNodos() {
 		return _listaNodos;
@@ -149,8 +129,7 @@ public class Grafo {
 	}
 
 	public HashMap<Integer, ArrayList<Nodo>> getindiceConVecinos() {
-		return this.indiceConVecinos;
-
+		return this._indiceConVecinos;
 	}
 
 	public boolean tieneVecinos(Nodo nodo) {
@@ -166,7 +145,6 @@ public class Grafo {
 		if (tieneVecinos(nodo)) {
 			Collections.sort(getindiceConVecinos().get(nodo.getIndiceNodo()), comparador);
 		}
-
 	}
 
 	public Nodo obtenerPrimerVecino(Nodo nodo) {
@@ -175,5 +153,12 @@ public class Grafo {
 		}
 		return null;
 	}
-
+	
+//	public void resetearGrafo() {
+//		_vecinos.clear();
+//		_indiceConVecinos.clear();
+//		_listaNodos.clear();
+//		_cantArisActuales=0;
+//	}
+	
 }

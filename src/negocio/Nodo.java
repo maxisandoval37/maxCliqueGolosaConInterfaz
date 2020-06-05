@@ -6,18 +6,18 @@ public class Nodo {
 
 	private int x,y;
 	public static final int diametroCirculo=100;
-	private Integer peso;
-	private int indice_nodo;
-	private int cantidadVecinos;
+	private Integer _peso;
+	private int _indice_nodo;
+	private int _cantidadVecinos;
 	
 
 	public Nodo(int indice_nodo,int x, int y,int peso) {
 		super();
 		this.x = x;
 		this.y = y;
-		this.indice_nodo = indice_nodo;
+		this._indice_nodo = indice_nodo;
 		this.setPeso(peso);
-		this.cantidadVecinos = 0;
+		this._cantidadVecinos = 0;
 	}
 	
 	public int getX() {
@@ -37,15 +37,15 @@ public class Nodo {
 	}
 
 	public Integer getPeso() {
-		return peso;
+		return _peso;
 	}
 
 	public void setPeso(Integer peso) {
-		this.peso = peso;
+		this._peso = peso;
 	}
 
 	public int getIndiceNodo() {
-		return indice_nodo;
+		return _indice_nodo;
 	}
 
 	public void aumentarCantVecinos() {
@@ -54,20 +54,13 @@ public class Nodo {
 	}
 
 	private void setCantidadVecinos(int i) {
-		this.cantidadVecinos =  i;
+		this._cantidadVecinos =  i;
 		
 	}
 
 	public int getCantidadVecinos() {
-		return cantidadVecinos;
+		return _cantidadVecinos;
 	}
 
-
-
-	
-	
-	
-	
-	
 	
 }

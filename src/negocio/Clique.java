@@ -4,41 +4,41 @@ import java.util.ArrayList;
 
 public class Clique {
 
-	ArrayList<Nodo> listaNodo;
-	private int peso;
+	ArrayList<Nodo> _listaNodo;
+	private int _peso;
 
 	public Clique() {
-		listaNodo = new ArrayList<Nodo>();
+		_listaNodo = new ArrayList<Nodo>();
 		this.setPeso(0);
 
 	}
 
 	public void agregarNodoAClique(Nodo nodo, Grafo grafo) {
 
-		if (!listaNodo.contains(nodo) && esVecinodeTodos(nodo, grafo)) {
-			listaNodo.add(nodo);
+		if (!_listaNodo.contains(nodo) && esVecinodeTodos(nodo, grafo)) {
+			_listaNodo.add(nodo);
 			this.setPeso(this.getPeso() + nodo.getPeso());
 		}
 	}
 
 	private boolean esVecinodeTodos(Nodo nodo, Grafo grafo) {
 		boolean ret = true;
-		for (Nodo iteracion : listaNodo) {
+		for (Nodo iteracion : _listaNodo) {
 			ret = ret && grafo.getindiceConVecinos().get(iteracion.getIndiceNodo()).contains(nodo);
 		}
 		return ret;
 	}
 
 	public ArrayList<Nodo> getListaNodo() {
-		return listaNodo;
+		return _listaNodo;
 	}
 
 	public int getPeso() {
-		return peso;
+		return _peso;
 	}
 
 	public void setPeso(int peso) {
-		this.peso = peso;
+		this._peso = peso;
 	}
 
 }

@@ -13,21 +13,21 @@ public class Dibujo {
 
 		if (e.getX1() > e.getX2() && e.getY1() > e.getY2()) {
 			g.drawString(e.getNombre(), e.getX1() - Math.abs((e.getX1() - e.getX2()) / 2),
-					e.getY1() - Math.abs((e.getY1() - e.getY2()) / 2));
+			e.getY1() - Math.abs((e.getY1() - e.getY2()) / 2));
 		}
 		if (e.getX1() < e.getX2() && e.getY1() < e.getY2()) {
 			g.drawString(e.getNombre(), e.getX2() - Math.abs((e.getX1() - e.getX2()) / 2),
-					e.getY2() - Math.abs((e.getY1() - e.getY2()) / 2));
+			e.getY2() - Math.abs((e.getY1() - e.getY2()) / 2));
 		}
 
 		if (e.getX1() > e.getX2() && e.getY1() < e.getY2()) {
 			g.drawString(e.getNombre(), e.getX1() - Math.abs((e.getX1() - e.getX2()) / 2),
-					e.getY2() - Math.abs((e.getY1() - e.getY2()) / 2));
+			e.getY2() - Math.abs((e.getY1() - e.getY2()) / 2));
 		}
 
 		if (e.getX1() < e.getX2() && e.getY1() > e.getY2()) {
 			g.drawString(e.getNombre(), e.getX2() - Math.abs((e.getX1() - e.getX2()) / 2),
-					e.getY1() - Math.abs((e.getY1() - e.getY2()) / 2));
+			e.getY1() - Math.abs((e.getY1() - e.getY2()) / 2));
 		}
 	}
 	

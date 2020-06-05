@@ -7,9 +7,9 @@ public class Principal_TP3 {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Lienzo frame = new Lienzo();
-                    frame.setVisible(true);
-                    frame.setResizable(false);
+                    VistaBienvenida frame = new VistaBienvenida();
+                    frame.ventanaBienvenida.setVisible(true);
+                    frame.ventanaBienvenida.setResizable(false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

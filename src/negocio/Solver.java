@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 
 public class Solver {
 
-	private Clique maximaClique;
-	private ArrayList<Nodo> listaNodosTienenVecinos;
+	private Clique _maximaClique;
+	private ArrayList<Nodo> _listaNodosTienenVecinos;
 	Comparator<Nodo> comparador;
 	Grafo grafo;
 
 	public Solver(Comparator<Nodo> comparador, Grafo grafo) {
-		this.maximaClique = new Clique();
-		this.listaNodosTienenVecinos = new ArrayList<Nodo>();
+		this._maximaClique = new Clique();
+		this._listaNodosTienenVecinos = new ArrayList<Nodo>();
 		this.comparador = comparador;
 		this.grafo = grafo;
 
@@ -25,19 +25,19 @@ public class Solver {
 
 		filtrar(grafo);
 
-		ordenarNodosPorPeso(this.listaNodosTienenVecinos);
+		ordenarNodosPorPeso(this._listaNodosTienenVecinos);
 
-		for (int i = 0; i < this.listaNodosTienenVecinos.size(); i++) {
+		for (int i = 0; i < this._listaNodosTienenVecinos.size(); i++) {
 
-			Nodo nodoMasPesado = this.listaNodosTienenVecinos.get(0);
-			this.listaNodosTienenVecinos.remove(0);
-			maximaClique.agregarNodoAClique(nodoMasPesado, grafo);
+			Nodo nodoMasPesado = this._listaNodosTienenVecinos.get(0);
+			this._listaNodosTienenVecinos.remove(0);
+			_maximaClique.agregarNodoAClique(nodoMasPesado, grafo);
 			grafo.ordenarVecinos(nodoMasPesado, comparador);
 
 			Nodo vecinoMasPesado = (grafo.obtenerPrimerVecino(nodoMasPesado));
 			grafo.ordenarVecinos(vecinoMasPesado, comparador);
-			maximaClique.agregarNodoAClique(vecinoMasPesado, grafo);
-			this.listaNodosTienenVecinos.remove(vecinoMasPesado);
+			_maximaClique.agregarNodoAClique(vecinoMasPesado, grafo);
+			this._listaNodosTienenVecinos.remove(vecinoMasPesado);
 
 			ArrayList<Nodo> listaEnComun = interseccion(grafo.obtenerVecinos(nodoMasPesado),
 					grafo.obtenerVecinos(vecinoMasPesado));
@@ -45,7 +45,7 @@ public class Solver {
 
 		}
 
-		return maximaClique;
+		return _maximaClique;
 	}
 
 	
@@ -53,7 +53,7 @@ public class Solver {
 	private void filtrar(Grafo grafo) {
 		for (int i = 0; i < grafo.getListaNodos().size(); i++) {
 			if (grafo.tieneVecinos(grafo.getListaNodos().get(i))) {
-				this.listaNodosTienenVecinos.add(grafo._listaNodos.get(i));
+				this._listaNodosTienenVecinos.add(grafo._listaNodos.get(i));
 			}
 		}
 	}
@@ -61,7 +61,7 @@ public class Solver {
 	private void BuscarClique(ArrayList<Nodo> listaInterseccion) {
 		while (!listaInterseccion.isEmpty()) {
 			ordenarNodosPorPeso(listaInterseccion);
-			maximaClique.agregarNodoAClique(listaInterseccion.get(0), grafo);
+			_maximaClique.agregarNodoAClique(listaInterseccion.get(0), grafo);
 			listaInterseccion.remove(0);
 			if (listaInterseccion.isEmpty()) {
 				return;
@@ -83,7 +83,7 @@ public class Solver {
 	}
 
 	public Clique getClique() {
-		return this.maximaClique;
+		return this._maximaClique;
 	}
 
 }

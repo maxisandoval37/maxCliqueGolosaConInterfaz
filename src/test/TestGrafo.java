@@ -15,8 +15,6 @@ public class TestGrafo {
 	void antesQueTodo() {
 		g = new Grafo(5);
 		
-		
-		
 		a=new Nodo(0,10,10,100);
 		b=new Nodo(1,20,20,50);
 		c=new Nodo(2,30,30,100);
@@ -24,8 +22,6 @@ public class TestGrafo {
 		
 		g.agregarNodo(a);
 		g.agregarNodo(b);
-		
-		
 		
 		g.agregarArista(0, 1);
 		g.agregarArista(1, 2);
@@ -68,16 +64,6 @@ public class TestGrafo {
 		g.agregarArista(0, 1);
 		g.eliminarArista(0, 1);
 		assertFalse(g.existeArista(0, 1));
-	}
-
-	@Test
-	public void testGrado() {
-		assertEquals(2, g.grado(1));
-	}
-
-	@Test
-	public void testGradoCero() {
-		assertEquals(0, g.grado(4));
 	}
 
 	@Test
@@ -126,6 +112,5 @@ public class TestGrafo {
 			g.agregarArista(0, -1);
 		});
 	}
-
 
 }
