@@ -9,31 +9,31 @@ import java.util.HashSet;
 
 public class TestGrafo {
 	Grafo g;
-	Nodo a,b,c;
+	Nodo a,b,c,d;
 
 	@BeforeEach
 	void antesQueTodo() {
 		g = new Grafo(5);
 		
-		a=new Nodo(0,10,10,100);
+		a=new Nodo(0,1,1,100);
 		b=new Nodo(1,20,20,50);
 		c=new Nodo(2,30,30,100);
+		d=new Nodo(3,50,50,30);
 		
 		
 		g.agregarNodo(a);
 		g.agregarNodo(b);
 		
 		g.agregarArista(0, 1);
-		g.agregarArista(1, 2);
+		g.agregarArista(0, 2);
+		g.agregarArista(0, 3);
 		g.agregarArista(2, 3);
-		g.agregarArista(3, 0);
 		
 		g.agregarNodoAindiceConVecinos(a, b);
 	}
 	@Test
 	public void testContieneUnNodo() {
 		
-//		g.agregarNodo(c);
 		assertTrue(g._listaNodos.contains(a)); 
 	}
 	@Test
@@ -43,6 +43,22 @@ public class TestGrafo {
 		assertTrue(g._listaNodos.contains(a)); 
 		assertTrue(g._listaNodos.contains(b));
 		assertTrue(g._listaNodos.contains(c));
+	}
+	@Test
+	public void testSonVecinos_A_B() {
+		assertEquals(a.getCantidadVecinos(),1);
+		assertEquals(b.getCantidadVecinos(),1);
+		
+
+	}
+	@Test
+	public void testMultiplesVecinosDe_A() {
+		g.agregarNodoAindiceConVecinos(a, c);
+		g.agregarNodoAindiceConVecinos(a, d);
+		assertEquals(a.getCantidadVecinos(),3);
+
+		
+
 	}
 
 	@Test

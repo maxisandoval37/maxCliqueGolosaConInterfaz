@@ -27,6 +27,9 @@ class TestNodo {
 		
 		a=new Nodo(0,10,10,100);
 		b=new Nodo(1,20,20,50);
+		
+		grafo.agregarNodo(a);
+		grafo.agregarNodo(b);
 		grafo.agregarArista(0, 1);
 		grafo.agregarNodoAindiceConVecinos(a, b);
 		

@@ -16,7 +16,7 @@ public class Grafo {
 
 	public Grafo(int vertices) {
 		_capacidadAristas = (vertices * (vertices-1)) /2 ;
-		System.out.println(_capacidadAristas + " "+_capacidadAristas);
+		
 		_vecinos = new ArrayList<Set<Integer>>(_capacidadAristas);
 		_indiceConVecinos = new HashMap<Integer, ArrayList<Nodo>>();
 		_listaNodos = new ArrayList<Nodo>();
