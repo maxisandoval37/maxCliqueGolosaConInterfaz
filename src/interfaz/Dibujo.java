@@ -44,6 +44,8 @@ public class Dibujo {
 				g.drawString("P(" + n.getPeso() + ") // i:(" + n.getIndiceNodo() + ")",
 				n.getX() - Nodo.diametroCirculo / 3, n.getY());
 		}
+//		else //*
+//			JOptionPane.showMessageDialog(null, "EL NODO DEBE ESTAR ADENTRO DEL PANEL DE DIBUJO");
 	}
 
 }

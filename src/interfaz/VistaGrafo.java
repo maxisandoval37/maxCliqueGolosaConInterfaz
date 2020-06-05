@@ -2,6 +2,7 @@ package interfaz;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import negocio.*;
 import javax.swing.*;
 
@@ -22,6 +23,9 @@ public class VistaGrafo extends JFrame implements MouseListener {
 	ComparadorPorGrado comparaPorGrado;
 	private Color colorNodos;
 	public Grafo _grafo;
+	private JLabel _lblPesoTotalClique;
+	private JLabel _lblGradoClique;
+	private JLabel _lblTimepoEmpleadoClique;
 
 	public VistaGrafo() {
 		initialize();
@@ -30,7 +34,6 @@ public class VistaGrafo extends JFrame implements MouseListener {
 		comparaPorGrado = new ComparadorPorGrado();
 		colorNodos = Color.black;
 		_grafo = new Grafo(VistaBienvenida.cantidadNodosLimite);
-		System.out.println(VistaBienvenida.cantidadNodosLimite+" <-");
 		this._vectorNodos = new Vector<>();
 		this._vectorAristas = new Vector<>();
 		this.addMouseListener(this);
@@ -43,6 +46,9 @@ public class VistaGrafo extends JFrame implements MouseListener {
 		setBounds(300, 100, 1000, 800);
 		inicializarPanelDibujar();
 		inicializarPanelBotones();
+		inicializarLabelPesoTotalClique();
+		inicializarLabelGradoClique();
+		inicializarLabelTiempoEnResolverClique();
 	}
 
 	@Override
@@ -136,8 +142,9 @@ public class VistaGrafo extends JFrame implements MouseListener {
 		getContentPane().add(panelDibujar);
 	}
 	private void inicializarBotonResolver() {
+		panelBotones.setLayout(null);
 		botonResolver = new JButton("Resolver clique max peso");
-		botonResolver.setBounds(500, 500, 100, 30);
+		botonResolver.setBounds(24, 5, 153, 23);
 		panelBotones.add(botonResolver);
 		accionBotonResolver();
 	}
@@ -146,13 +153,46 @@ public class VistaGrafo extends JFrame implements MouseListener {
 		botonResolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Solver solver = new Solver(comparaPorPeso,_grafo);
+				long startTime = System.nanoTime();
 				Clique clique = solver.resolver();
+				long endTime = System.nanoTime()-startTime;
+				endTime=TimeUnit.MILLISECONDS.convert(endTime, TimeUnit.NANOSECONDS);
 				_vectorNodos.clear();
 				_vectorAristas.clear();
 				repaint();
+				actualizarInfoLabelsClique(clique.getPeso(),clique.getListaNodo().size(),endTime);
 				repintarObjetos (clique.getListaNodo());
 			}
 		});
+	}
+	
+	private void inicializarLabelPesoTotalClique() {
+			_lblPesoTotalClique = new JLabel("PESO TOTAL MAX CLIQUE:");
+			_lblPesoTotalClique.setBounds(24, 125, 153, 160);
+			panelBotones.add(_lblPesoTotalClique);
+	}
+	
+	private void inicializarLabelGradoClique() {
+		_lblGradoClique = new JLabel("GRADO DE MAX CLIQUE:");
+		_lblGradoClique.setBounds(24, 250, 153, 160);
+		panelBotones.add(_lblGradoClique);
+	}
+	
+	private void inicializarLabelTiempoEnResolverClique() {
+		_lblTimepoEmpleadoClique = new JLabel("TIEMPO EMPLEADO:");
+		_lblTimepoEmpleadoClique.setBounds(24, 375, 153, 160);
+		panelBotones.add(_lblTimepoEmpleadoClique);
+	}
+	
+	private void actualizarInfoLabelsClique(Integer pesoClique,Integer gradoClique,long tiempoEjecu) {
+		String infoPeso="<html><body>PESO TOTAL MAX CLIQUE:<center><h1><br>"+pesoClique.toString()+"</br></h1></center></body></html>";
+		_lblPesoTotalClique.setText(infoPeso);
+		
+		String infoGrado="<html><body>GRADO DE MAX CLIQUE:<center><h1><br>"+gradoClique.toString()+"</br></h1></center></body></html>";
+		_lblGradoClique.setText(infoGrado);
+		
+		String infoTiempo="<html><body>TIEMPO EMPLEADO(mili-seg):<center><h1><br>"+Long.toString(tiempoEjecu)+"'</br></h1></center></body></html>";
+		_lblTimepoEmpleadoClique.setText(infoTiempo);
 	}
 
 	private void repintarObjetos(ArrayList<Nodo> objetos) {
@@ -170,7 +210,6 @@ public class VistaGrafo extends JFrame implements MouseListener {
 	}
 	
 	private void agregarAristas(int ari1, int ari2) {
-		System.out.println(VistaBienvenida.cantidadNodosLimite);
 		try {
 			_grafo.agregarArista(ari1, ari2);
 			repaint();

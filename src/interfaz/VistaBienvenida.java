@@ -1,7 +1,9 @@
 package interfaz;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -14,14 +16,16 @@ public class VistaBienvenida {
 	public JFrame ventanaBienvenida;
 	private JFrame ventanaGrafo;
 	private JButton btnEnviar;
+	private JLabel lblFondo;
 	private JTextField tFCantNodos;
 	private TextoTranslucido textoTranslucido;
 	static Integer cantidadNodosLimite;
 
 	public VistaBienvenida() {
 		initialize();
-		inicializarTextfieldCantArisCrear();
+		inicializarTextfieldCantNodosACrear();
 		inicializarBotonEnviar();
+		asignarFondo();
 	}
 
 	private void initialize() {
@@ -31,7 +35,7 @@ public class VistaBienvenida {
 		ventanaBienvenida.getContentPane().setLayout(null);
 	}
 	
-	private void inicializarTextfieldCantArisCrear() {
+	private void inicializarTextfieldCantNodosACrear() {
 		tFCantNodos = new JTextField();
 		setTextoTranslucido(new TextoTranslucido("NUMERO MAX DE NODOS A CREAR", tFCantNodos));
 		tFCantNodos.setBounds(347, 515, 343, 52);
@@ -57,6 +61,14 @@ public class VistaBienvenida {
 					JOptionPane.showMessageDialog(null, "INGRESE UN VALOR PARA CONTINUAR");
 			}
 		});
+	}
+	
+	private void asignarFondo(){
+		lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 1000, 800);
+		ventanaBienvenida.getContentPane().add(lblFondo);
+		
+		lblFondo.setIcon(new ImageIcon(VistaBienvenida.class.getResource("/interfaz/INICIO.png")));
 	}
 
 	private void cambiarVentana() {

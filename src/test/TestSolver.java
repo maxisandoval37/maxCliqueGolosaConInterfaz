@@ -1,7 +1,6 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,8 +41,6 @@ class TestSolver {
 		grafo.agregarNodo(b);
 		grafo.agregarNodo(c);
 		grafo.agregarNodo(d);
-
-		
 		
 		grafo.agregarArista(0, 1);
 		grafo.agregarArista(1, 2);
@@ -65,26 +62,17 @@ class TestSolver {
 		cliqueMasPesada.agregarNodoAClique(c, grafo);
 		cliqueMasPesada.agregarNodoAClique(d, grafo);
 		
-
-		
-		
-
-		
 	}
 	@Test
 	void testCliqueMaximaPorGrado() {
 		resultado=new Solver(comparadorgrado, grafo);
 		assertEquals(resultado.resolver().getListaNodo().size(),cliqueConMayorGrado.getListaNodo().size());
-
-		
-
 	}
+	
 	@Test
 	void testCliqueMaximaPorPeso() {
 		resultado=new Solver(comparadorpeso, grafo);		
 		assertEquals(resultado.resolver().getPeso(),cliqueMasPesada.getPeso());
-
-
 	}
 
 }
