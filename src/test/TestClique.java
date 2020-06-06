@@ -10,7 +10,7 @@ import negocio.Grafo;
 import negocio.Nodo;
 
 class TestClique {
-	Clique clique;
+	Clique clique,otraClique;
 	Nodo a,b,c,d;
 	Grafo grafo;
 
@@ -22,6 +22,7 @@ class TestClique {
 		grafo=new Grafo(4);
 		
 		clique=new Clique();
+		otraClique = new Clique();
 		
 		
 		a=new Nodo(0,10,10,100);
@@ -48,7 +49,9 @@ class TestClique {
 		clique.agregarNodoAClique(a, grafo);
 		clique.agregarNodoAClique(b, grafo);
 		clique.agregarNodoAClique(c, grafo);
-
+		
+		otraClique.agregarNodoAClique(a, grafo);
+		otraClique.agregarNodoAClique(c, grafo);
 		
 		
 
@@ -62,10 +65,6 @@ class TestClique {
 	@Test
 	void testCliquePeso() {
 		assertEquals(clique.getPeso(),250);
-
-		
-		
-		
 	}
 	
 	
@@ -80,17 +79,18 @@ class TestClique {
 		
 		
 		
-		
 		assertEquals(clique.getPeso(), 250);
 	}
 	
 	@Test
 	void testListaDeNodos() {
-		assertEquals(clique.getListaNodo().size(),3);
-
+		assertEquals(clique.getListaNodo().size(),3);	
 		
-		
-		
+	}
+	
+	@Test
+	void testCliqueConMasPeso() {
+		assertEquals(clique.cliqueConMasPeso(otraClique),clique);
 	}
 
 }

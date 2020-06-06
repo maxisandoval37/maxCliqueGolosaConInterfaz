@@ -119,14 +119,6 @@ public class Grafo {
 		this._listaNodos = listaNodos;
 	}
 
-	public String toString() {
-		String cadena = "Grafo = [ ";
-		for (Nodo nodo : this._listaNodos) {
-			cadena += nodo.getIndiceNodo() + " ";
-		}
-		cadena += " ]";
-		return cadena;
-	}
 
 	public HashMap<Integer, ArrayList<Nodo>> getindiceConVecinos() {
 		return this._indiceConVecinos;
@@ -153,12 +145,5 @@ public class Grafo {
 		}
 		return null;
 	}
-	
-//	public void resetearGrafo() {
-//		_vecinos.clear();
-//		_indiceConVecinos.clear();
-//		_listaNodos.clear();
-//		_cantArisActuales=0;
-//	}
 	
 }

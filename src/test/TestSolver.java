@@ -10,7 +10,7 @@ import negocio.ComparadorPorGrado;
 import negocio.ComparadorPorPeso;
 import negocio.Grafo;
 import negocio.Nodo;
-import negocio.Solver;
+import negocio.SolverGoloso;
 
 class TestSolver {
 	Clique cliqueMasPesada,cliqueConMayorGrado;
@@ -18,7 +18,7 @@ class TestSolver {
 	Grafo grafo;
 	ComparadorPorGrado comparadorgrado;
 	ComparadorPorPeso  comparadorpeso;
-	Solver resultado;
+	SolverGoloso resultado;
 
 	@BeforeEach
 	 void antesquetodo(){
@@ -65,13 +65,13 @@ class TestSolver {
 	}
 	@Test
 	void testCliqueMaximaPorGrado() {
-		resultado=new Solver(comparadorgrado, grafo);
+		resultado=new SolverGoloso(comparadorgrado, grafo);
 		assertEquals(resultado.resolver().getListaNodo().size(),cliqueConMayorGrado.getListaNodo().size());
 	}
 	
 	@Test
 	void testCliqueMaximaPorPeso() {
-		resultado=new Solver(comparadorpeso, grafo);		
+		resultado=new SolverGoloso(comparadorpeso, grafo);		
 		assertEquals(resultado.resolver().getPeso(),cliqueMasPesada.getPeso());
 	}
 

@@ -2,14 +2,15 @@ package negocio;
 
 import java.util.ArrayList;
 
-public class Clique {
+
+public class Clique  {
 
 	ArrayList<Nodo> _listaNodo;
 	private int _peso;
 
 	public Clique() {
 		_listaNodo = new ArrayList<Nodo>();
-		this.setPeso(0);
+		this._peso = 0;
 
 	}
 
@@ -17,7 +18,7 @@ public class Clique {
 
 		if (!_listaNodo.contains(nodo) && esVecinodeTodos(nodo, grafo)) {
 			_listaNodo.add(nodo);
-			this.setPeso(this.getPeso() + nodo.getPeso());
+			this._peso = (this.getPeso() + nodo.getPeso());
 		}
 	}
 
@@ -28,6 +29,16 @@ public class Clique {
 		}
 		return ret;
 	}
+	
+	public Clique cliqueConMasPeso(Clique otra) {
+		if (this._peso>otra.getPeso()) {
+			return this;
+		}
+		return otra;
+	}
+
+	
+	
 
 	public ArrayList<Nodo> getListaNodo() {
 		return _listaNodo;
@@ -37,8 +48,15 @@ public class Clique {
 		return _peso;
 	}
 
-	public void setPeso(int peso) {
-		this._peso = peso;
+	public int getGrado() {
+		return this._listaNodo.size();
 	}
+
+
+	
+
+	
+
+	
 
 }

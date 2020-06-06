@@ -152,19 +152,25 @@ public class VistaGrafo extends JFrame implements MouseListener {
 	private void accionBotonResolver() {
 		botonResolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Solver solver = new Solver(comparaPorPeso,_grafo);
+				SolverGoloso solverPorPeso = new SolverGoloso(comparaPorPeso,_grafo);
+				SolverGoloso solverPorGrado = new SolverGoloso(comparaPorGrado,_grafo);
 				long startTime = System.nanoTime();
-				Clique clique = solver.resolver();
+				Clique porPeso = solverPorPeso.resolver();
+				Clique porGrado = solverPorGrado.resolver();
+				Clique conMasPeso = porPeso.cliqueConMasPeso(porGrado);
 				long endTime = System.nanoTime()-startTime;
 				endTime=TimeUnit.MILLISECONDS.convert(endTime, TimeUnit.NANOSECONDS);
 				_vectorNodos.clear();
 				_vectorAristas.clear();
 				repaint();
-				actualizarInfoLabelsClique(clique.getPeso(),clique.getListaNodo().size(),endTime);
-				repintarObjetos (clique.getListaNodo());
+				actualizarInfoLabelsClique(conMasPeso.getPeso(),conMasPeso.getGrado(),endTime);
+				repintarObjetos (conMasPeso.getListaNodo());
 			}
 		});
 	}
+	
+	
+	
 	
 	private void inicializarLabelPesoTotalClique() {
 			_lblPesoTotalClique = new JLabel("PESO TOTAL MAX CLIQUE:");
@@ -233,7 +239,6 @@ public class VistaGrafo extends JFrame implements MouseListener {
 		_vectorAristas.clear();
 		repaint();
 		_grafo = new Grafo(VistaBienvenida.cantidadNodosLimite);
-		//grafo.resetearGrafo();
 		indice1auxNodo=-1;
 		indice2auxNodo=-1;
 		_indiceAuxCrearNodo=-1;

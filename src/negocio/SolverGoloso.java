@@ -7,14 +7,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-public class Solver {
+public class SolverGoloso {
 
 	private Clique _maximaClique;
 	private ArrayList<Nodo> _listaNodosTienenVecinos;
 	Comparator<Nodo> comparador;
 	Grafo grafo;
 
-	public Solver(Comparator<Nodo> comparador, Grafo grafo) {
+	public SolverGoloso(Comparator<Nodo> comparador, Grafo grafo) {
 		this._maximaClique = new Clique();
 		this._listaNodosTienenVecinos = new ArrayList<Nodo>();
 		this.comparador = comparador;
@@ -24,7 +24,7 @@ public class Solver {
 
 	public Clique resolver() {
 
-		filtrar(grafo);
+		filtrar();
 
 		ordenarNodosPorPeso(this._listaNodosTienenVecinos);
 
@@ -49,12 +49,10 @@ public class Solver {
 		return _maximaClique;
 	}
 
-	
-
-	private void filtrar(Grafo grafo) {
-		for (int i = 0; i < grafo.getListaNodos().size(); i++) {
-			if (grafo.tieneVecinos(grafo.getListaNodos().get(i))) {
-				this._listaNodosTienenVecinos.add(grafo._listaNodos.get(i));
+	private void filtrar() {
+		for (int i = 0; i < this.grafo.getListaNodos().size(); i++) {
+			if (this.grafo.tieneVecinos(this.grafo.getListaNodos().get(i))) {
+				this._listaNodosTienenVecinos.add(this.grafo._listaNodos.get(i));
 			}
 		}
 	}
@@ -78,7 +76,7 @@ public class Solver {
 				.collect(Collectors.toList());
 		return listaInter;
 	}
-	
+
 	private void ordenarNodosPorPeso(ArrayList<Nodo> lista) {
 		Collections.sort(lista, comparador);
 	}
