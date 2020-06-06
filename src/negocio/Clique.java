@@ -37,9 +37,6 @@ public class Clique  {
 		return otra;
 	}
 
-	
-	
-
 	public ArrayList<Nodo> getListaNodo() {
 		return _listaNodo;
 	}
@@ -51,12 +48,5 @@ public class Clique  {
 	public int getGrado() {
 		return this._listaNodo.size();
 	}
-
-
-	
-
-	
-
-	
 
 }

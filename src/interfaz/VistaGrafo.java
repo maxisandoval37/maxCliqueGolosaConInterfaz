@@ -169,9 +169,6 @@ public class VistaGrafo extends JFrame implements MouseListener {
 		});
 	}
 	
-	
-	
-	
 	private void inicializarLabelPesoTotalClique() {
 			_lblPesoTotalClique = new JLabel("PESO TOTAL MAX CLIQUE:");
 			_lblPesoTotalClique.setBounds(24, 125, 153, 160);
@@ -202,16 +199,13 @@ public class VistaGrafo extends JFrame implements MouseListener {
 	}
 
 	private void repintarObjetos(ArrayList<Nodo> objetos) {
-		for (int i = 0; i < objetos.size() - 1; i++) {
+		for (int i = 0; i < objetos.size() ; i++) {
+			for (int j = 0; j < objetos.size() ; j++) {
 			colorNodos = Color.blue;
 			_vectorNodos.add(objetos.get(i));
-			_vectorNodos.add(objetos.get(objetos.size() - 1));
-
-			_vectorAristas.add(new Arista(objetos.get(i).getX(), objetos.get(i).getY(), objetos.get(i + 1).getX(),
-			objetos.get(i + 1).getY(), ""));
-
-			_vectorAristas.add(new Arista(objetos.get(0).getX(), objetos.get(0).getY(),
-			objetos.get(objetos.size() - 1).getX(), objetos.get(objetos.size() - 1).getY(), ""));
+			_vectorAristas.add(new Arista(objetos.get(i).getX(), objetos.get(i).getY(), objetos.get(j).getX(),
+			objetos.get(j).getY(), ""));
+			}
 		}repaint();
 	}
 	
@@ -229,9 +223,8 @@ public class VistaGrafo extends JFrame implements MouseListener {
 		try {
 			Integer.parseInt(cad);
 			return true;
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
+		} catch (NumberFormatException nfe)
+			{return false;}
 	}
 
 	private void resetearGrafo() {

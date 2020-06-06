@@ -66,7 +66,7 @@ class TestSolver {
 	@Test
 	void testCliqueMaximaPorGrado() {
 		resultado=new SolverGoloso(comparadorgrado, grafo);
-		assertEquals(resultado.resolver().getListaNodo().size(),cliqueConMayorGrado.getListaNodo().size());
+		assertEquals(resultado.resolver().getGrado(),cliqueConMayorGrado.getListaNodo().size());
 	}
 	
 	@Test
