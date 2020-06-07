@@ -13,9 +13,7 @@ class TestComparadorPorPeso {
 
 	Nodo a,b,c,d,e;
 	ComparadorPorPeso comparador;
-	
-	
-	
+
 	@BeforeEach
 	 void antesquetodo(){
 		comparador=new ComparadorPorPeso();
@@ -24,35 +22,23 @@ class TestComparadorPorPeso {
 		c=new Nodo(2,30,30,0);
 		d=new Nodo(3,40,40,0);
 		e=new Nodo(4,50,50,50);
-
-
-
-
-
-		
 	}
 
 	@Test
 	void testPrimeroMasGrande() {
-
-		
-
 		assertEquals(comparador.compare(a, b),-1);
 	}	
 	
 	
 	@Test
 	void testSegundoMasGrande() {
-
 		assertEquals(comparador.compare(b, a),1);
 	}
 	
 	
 	@Test
 	void testLosDosMismaCantidad() {
-		
 		assertEquals(comparador.compare(e, b),0);
-		
 	}
 	
 	
@@ -72,7 +58,4 @@ class TestComparadorPorPeso {
 		assertEquals(comparador.compare(c, d),0);
 	}
 	
-
-	
-
 }

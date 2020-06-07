@@ -1,7 +1,5 @@
 package negocio;
 
-
-
 public class Nodo {
 
 	private int x,y;
@@ -50,12 +48,10 @@ public class Nodo {
 
 	public void aumentarCantVecinos() {
 		this.setCantidadVecinos(this.getCantidadVecinos() + 1);
-		
 	}
 
 	private void setCantidadVecinos(int i) {
 		this._cantidadVecinos =  i;
-		
 	}
 
 	public int getCantidadVecinos() {

@@ -12,18 +12,11 @@ class TestComparadorPorGrado {
 	Nodo a,b;
 	ComparadorPorGrado comparador;
 	
-	
-	
 	@BeforeEach
 	 void antesquetodo(){
 		comparador=new ComparadorPorGrado();
 		a=new Nodo(0,10,10,100);
 		b=new Nodo(1,20,20,50);
-
-
-
-
-		
 	}
 
 	@Test
@@ -32,19 +25,17 @@ class TestComparadorPorGrado {
 		a.aumentarCantVecinos();
 		b.aumentarCantVecinos();
 		
-
 		assertEquals(comparador.compare(a, b),-1);
 	}	
-	
 	
 	@Test
 	void testSegundoMasGrande() {
 		a.aumentarCantVecinos();
 		a.aumentarCantVecinos();
 		b.aumentarCantVecinos();
+		
 		assertEquals(comparador.compare(b, a),1);
 	}
-	
 	
 	@Test
 	void testLosDosMismaCantidad() {
@@ -54,7 +45,6 @@ class TestComparadorPorGrado {
 		b.aumentarCantVecinos();
 		
 		assertEquals(comparador.compare(b, a),0);
-		
 	}
 	
 	
@@ -78,8 +68,5 @@ class TestComparadorPorGrado {
 				
 		assertEquals(comparador.compare(a, b),0);
 	}
-	
-
-	
 
 }

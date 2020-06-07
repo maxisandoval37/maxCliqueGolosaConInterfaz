@@ -8,8 +8,8 @@ public class Principal_TP3 {
             public void run() {
                 try {
                     VistaBienvenida frame = new VistaBienvenida();
-                    frame.ventanaBienvenida.setVisible(true);
-                    frame.ventanaBienvenida.setResizable(false);
+                    frame._ventanaBienvenida.setVisible(true);
+                    frame._ventanaBienvenida.setResizable(false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

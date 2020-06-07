@@ -5,24 +5,28 @@ import java.util.ArrayList;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class SolverGoloso {
 
 	private Clique _maximaClique;
 	private ArrayList<Nodo> _listaNodosTienenVecinos;
-	Comparator<Nodo> comparador;
-	Grafo grafo;
+	Comparator<Nodo> _comparador;
+	Grafo _grafo;
+	Long _tiempoTardado;
 
 	public SolverGoloso(Comparator<Nodo> comparador, Grafo grafo) {
 		this._maximaClique = new Clique();
 		this._listaNodosTienenVecinos = new ArrayList<Nodo>();
-		this.comparador = comparador;
-		this.grafo = grafo;
+		this._comparador = comparador;
+		this._grafo = grafo;
+		this._tiempoTardado = (long) 0;
 
 	}
 
 	public Clique resolver() {
+		long startTime = System.nanoTime();
 
 		filtrar();
 
@@ -32,27 +36,29 @@ public class SolverGoloso {
 
 			Nodo nodoMasPesado = this._listaNodosTienenVecinos.get(0);
 			this._listaNodosTienenVecinos.remove(0);
-			_maximaClique.agregarNodoAClique(nodoMasPesado, grafo);
-			grafo.ordenarVecinos(nodoMasPesado, comparador);
+			_maximaClique.agregarNodoAClique(nodoMasPesado, _grafo);
+			_grafo.ordenarVecinos(nodoMasPesado, _comparador);
 
-			Nodo vecinoMasPesado = (grafo.obtenerPrimerVecino(nodoMasPesado));
-			grafo.ordenarVecinos(vecinoMasPesado, comparador);
-			_maximaClique.agregarNodoAClique(vecinoMasPesado, grafo);
+			Nodo vecinoMasPesado = (_grafo.obtenerPrimerVecino(nodoMasPesado));
+			_grafo.ordenarVecinos(vecinoMasPesado, _comparador);
+			_maximaClique.agregarNodoAClique(vecinoMasPesado, _grafo);
 			this._listaNodosTienenVecinos.remove(vecinoMasPesado);
 
-			ArrayList<Nodo> listaEnComun = interseccion(grafo.obtenerVecinos(nodoMasPesado),
-					grafo.obtenerVecinos(vecinoMasPesado));
+			ArrayList<Nodo> listaEnComun = interseccion(_grafo.obtenerVecinos(nodoMasPesado),
+					_grafo.obtenerVecinos(vecinoMasPesado));
 			BuscarClique(listaEnComun);
 
 		}
-
+		
+		_tiempoTardado = System.nanoTime()-startTime;
+		_tiempoTardado=TimeUnit.MILLISECONDS.convert(_tiempoTardado, TimeUnit.NANOSECONDS);
 		return _maximaClique;
 	}
 
 	private void filtrar() {
-		for (int i = 0; i < this.grafo.getListaNodos().size(); i++) {
-			if (this.grafo.tieneVecinos(this.grafo.getListaNodos().get(i))) {
-				this._listaNodosTienenVecinos.add(this.grafo._listaNodos.get(i));
+		for (int i = 0; i < this._grafo.getListaNodos().size(); i++) {
+			if (this._grafo.tieneVecinos(this._grafo.getListaNodos().get(i))) {
+				this._listaNodosTienenVecinos.add(this._grafo._listaNodos.get(i));
 			}
 		}
 	}
@@ -60,12 +66,12 @@ public class SolverGoloso {
 	private void BuscarClique(ArrayList<Nodo> listaInterseccion) {
 		while (!listaInterseccion.isEmpty()) {
 			ordenarNodosPorPeso(listaInterseccion);
-			_maximaClique.agregarNodoAClique(listaInterseccion.get(0), grafo);
+			_maximaClique.agregarNodoAClique(listaInterseccion.get(0), _grafo);
 			listaInterseccion.remove(0);
 			if (listaInterseccion.isEmpty()) {
 				return;
 			} else {
-				ArrayList<Nodo> nueva = interseccion(listaInterseccion, grafo.obtenerVecinos(listaInterseccion.get(0)));
+				ArrayList<Nodo> nueva = interseccion(listaInterseccion, _grafo.obtenerVecinos(listaInterseccion.get(0)));
 				BuscarClique(nueva);
 			}
 		}
@@ -78,11 +84,15 @@ public class SolverGoloso {
 	}
 
 	private void ordenarNodosPorPeso(ArrayList<Nodo> lista) {
-		Collections.sort(lista, comparador);
+		Collections.sort(lista, _comparador);
 	}
 
 	public Clique getClique() {
 		return this._maximaClique;
+	}
+	
+	public Long getTiempoTardado() {
+		return this._tiempoTardado;
 	}
 
 }

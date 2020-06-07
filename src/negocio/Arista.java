@@ -2,7 +2,7 @@ package negocio;
 
 public class Arista {
 	private int x1, y1, x2, y2;
-	private String nombre;
+	private String _nombre;
 
 	public Arista(int x1, int y1, int x2, int y2, String nombre) {
 		super();//*
@@ -46,10 +46,10 @@ public class Arista {
 	}
 
 	public String getNombre() {
-		return nombre;
+		return _nombre;
 	}
 
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		this._nombre = nombre;
 	}
 }

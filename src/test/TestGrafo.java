@@ -1,11 +1,11 @@
 package test;
 
 import org.junit.jupiter.api.*;
+import static org.junit.Assert.*;
+
+import java.util.HashSet;
 import negocio.Grafo;
 import negocio.Nodo;
-
-import static org.junit.Assert.*;
-import java.util.HashSet;
 
 public class TestGrafo {
 	Grafo g;
@@ -20,7 +20,6 @@ public class TestGrafo {
 		c=new Nodo(2,30,30,100);
 		d=new Nodo(3,50,50,30);
 		
-		
 		g.agregarNodo(a);
 		g.agregarNodo(b);
 		
@@ -31,11 +30,12 @@ public class TestGrafo {
 		
 		g.agregarNodoAindiceConVecinos(a, b);
 	}
+	
 	@Test
 	public void testContieneUnNodo() {
-		
 		assertTrue(g._listaNodos.contains(a)); 
 	}
+	
 	@Test
 	public void testContieneVariosNodo() {
 		
@@ -44,21 +44,18 @@ public class TestGrafo {
 		assertTrue(g._listaNodos.contains(b));
 		assertTrue(g._listaNodos.contains(c));
 	}
+	
 	@Test
 	public void testSonVecinos_A_B() {
 		assertEquals(a.getCantidadVecinos(),1);
 		assertEquals(b.getCantidadVecinos(),1);
-		
-
 	}
+	
 	@Test
 	public void testMultiplesVecinosDe_A() {
 		g.agregarNodoAindiceConVecinos(a, c);
 		g.agregarNodoAindiceConVecinos(a, d);
 		assertEquals(a.getCantidadVecinos(),3);
-
-		
-
 	}
 
 	@Test

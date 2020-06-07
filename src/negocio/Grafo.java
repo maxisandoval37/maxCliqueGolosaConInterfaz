@@ -22,10 +22,8 @@ public class Grafo {
 		_listaNodos = new ArrayList<Nodo>();
 		setListaNodos(new ArrayList<Nodo>());
 
-		for (int i = 0; i < _capacidadAristas; i++)
+		for (int i = 0; i <= _capacidadAristas; i++)
 			_vecinos.add(new HashSet<Integer>());
-
-		_capacidadAristas = vertices;
 	}
 
 	public void agregarNodo(Nodo nodo) {
@@ -33,38 +31,40 @@ public class Grafo {
 			_listaNodos.add(nodo);
 		}
 	}
-
+	
 	public void agregarNodoAindiceConVecinos(Nodo nodo1, Nodo nodo2) {
 		if (!getindiceConVecinos().containsKey(nodo1.getIndiceNodo())) {
-			ArrayList<Nodo> auxiliar = new ArrayList<Nodo>();
-			auxiliar.add(nodo2);
-			this._indiceConVecinos.put(nodo1.getIndiceNodo(), auxiliar);
-			nodo1.aumentarCantVecinos();
-		}
-		else {
-			if (!obtenerVecinos(nodo1).contains(nodo2)) {
-				ArrayList<Nodo> auxiliar = new ArrayList<Nodo>();
-				auxiliar.addAll(getindiceConVecinos().get(nodo1.getIndiceNodo()));
-				auxiliar.add(nodo2);
-				this._indiceConVecinos.put(nodo1.getIndiceNodo(), auxiliar);
-				nodo1.aumentarCantVecinos();
-			}
-		}
-		if (!getindiceConVecinos().containsKey(nodo2.getIndiceNodo())) {
-			ArrayList<Nodo> auxiliar2 = new ArrayList<Nodo>();
-			auxiliar2.add(nodo1);
-			this._indiceConVecinos.put(nodo2.getIndiceNodo(), auxiliar2);
-			nodo2.aumentarCantVecinos();
+			agregarNodoAuxI(nodo1, nodo2);
 		} else {
-			if (!obtenerVecinos(nodo2).contains(nodo1)) {
-
-				ArrayList<Nodo> auxiliar2 = new ArrayList<Nodo>();
-				auxiliar2.addAll(getindiceConVecinos().get(nodo2.getIndiceNodo()));
-				auxiliar2.add(nodo1);
-				this._indiceConVecinos.put(nodo2.getIndiceNodo(), auxiliar2);
-				nodo2.aumentarCantVecinos();
-			}
+			if (!obtenerVecinos(nodo1).contains(nodo2))
+				agregarNodoAuxE(nodo1, nodo2);
 		}
+
+		if (!getindiceConVecinos().containsKey(nodo2.getIndiceNodo())) {
+			agregarNodoAuxI(nodo2, nodo1);
+
+		} else {
+			if (!obtenerVecinos(nodo2).contains(nodo1)) 
+				agregarNodoAuxE(nodo2, nodo1);
+		}
+	}
+	
+	
+	private void agregarNodoAuxI(Nodo a,Nodo b) {
+		ArrayList<Nodo> auxiliar = new ArrayList<Nodo>();
+		auxiliar.add(b);
+		this._indiceConVecinos.put(a.getIndiceNodo(), auxiliar);
+		a.aumentarCantVecinos();
+		
+	}
+	
+	private void agregarNodoAuxE(Nodo a,Nodo b) {
+		ArrayList<Nodo> auxiliar = new ArrayList<Nodo>();
+		auxiliar.addAll(getindiceConVecinos().get(a.getIndiceNodo()));
+		auxiliar.add(b);
+		this._indiceConVecinos.put(a.getIndiceNodo(), auxiliar);
+		a.aumentarCantVecinos();
+		
 	}
 
 	public void agregarArista(int i, int j) {
@@ -91,7 +91,7 @@ public class Grafo {
 	}
 
 	private void verificarVertice(int i) {
-		if (i < 0 || i >=  _capacidadAristas)
+		if (i < 0 || i >  _capacidadAristas)
 			throw new IllegalArgumentException("Se intento usar valores fuera de rango");
 	}
 	
@@ -125,7 +125,6 @@ public class Grafo {
 	}
 
 	public boolean tieneVecinos(Nodo nodo) {
-
 		return getindiceConVecinos().containsKey(nodo.getIndiceNodo());
 	}
 
@@ -134,9 +133,8 @@ public class Grafo {
 	}
 
 	public void ordenarVecinos(Nodo nodo, Comparator<Nodo> comparador) {
-		if (tieneVecinos(nodo)) {
+		if (tieneVecinos(nodo)) 
 			Collections.sort(getindiceConVecinos().get(nodo.getIndiceNodo()), comparador);
-		}
 	}
 
 	public Nodo obtenerPrimerVecino(Nodo nodo) {

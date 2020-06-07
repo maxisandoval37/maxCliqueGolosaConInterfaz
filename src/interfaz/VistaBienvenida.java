@@ -13,14 +13,14 @@ import javax.swing.JTextField;
 
 public class VistaBienvenida {
 
-	public JFrame ventanaBienvenida;
-	private JFrame ventanaGrafo;
-	private JButton btnEnviar;
-	private JLabel lblFondo;
-	private JTextField tFCantNodos;
-	private TextoTranslucido textoTranslucido;
-	static Integer cantidadNodosLimite;
-
+	public JFrame _ventanaBienvenida;
+	private JFrame _ventanaGrafo;
+	private JButton _btnEnviar;
+	private JLabel _lblFondo;
+	private JTextField _tFCantNodos;
+	private TextoTranslucido _textoTranslucido;
+	static Integer _cantidadNodosLimite;
+	
 	public VistaBienvenida() {
 		initialize();
 		inicializarTextfieldCantNodosACrear();
@@ -29,33 +29,33 @@ public class VistaBienvenida {
 	}
 
 	private void initialize() {
-		ventanaBienvenida = new JFrame();
-		ventanaBienvenida.setBounds(300, 100, 1000, 800);
-		ventanaBienvenida.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ventanaBienvenida.getContentPane().setLayout(null);
+		_ventanaBienvenida = new JFrame();
+		_ventanaBienvenida.setBounds(300, 100, 1000, 800);
+		_ventanaBienvenida.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_ventanaBienvenida.getContentPane().setLayout(null);
 	}
 	
 	private void inicializarTextfieldCantNodosACrear() {
-		tFCantNodos = new JTextField();
-		setTextoTranslucido(new TextoTranslucido("NUMERO MAX DE NODOS A CREAR", tFCantNodos));
-		tFCantNodos.setBounds(347, 515, 343, 52);
-		ventanaBienvenida.getContentPane().add(tFCantNodos);
-		tFCantNodos.setColumns(10);
-		limitarInputUsuario(tFCantNodos);
+		_tFCantNodos = new JTextField();
+		setTextoTranslucido(new TextoTranslucido("NUMERO MAX DE NODOS A CREAR", _tFCantNodos));
+		_tFCantNodos.setBounds(347, 515, 343, 52);
+		_ventanaBienvenida.getContentPane().add(_tFCantNodos);
+		_tFCantNodos.setColumns(10);
+		limitarInputUsuario(_tFCantNodos);
 	}
 	
 	private void inicializarBotonEnviar() {
-		btnEnviar = new JButton("ENVIAR");
-		btnEnviar.setBounds(443, 624, 164, 52);
-		ventanaBienvenida.getContentPane().add(btnEnviar);
+		_btnEnviar = new JButton("ENVIAR");
+		_btnEnviar.setBounds(443, 624, 164, 52);
+		_ventanaBienvenida.getContentPane().add(_btnEnviar);
 		accionBotonEnviar();
 	}
 	
 	private void accionBotonEnviar() {
-		btnEnviar.addActionListener(new ActionListener() {
+		_btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!tFCantNodos.getText().toString().equals("")) {
-					cantidadNodosLimite = Integer.parseInt(tFCantNodos.getText().toString());
+				if (!_tFCantNodos.getText().toString().equals("")) {
+					_cantidadNodosLimite = Integer.parseInt(_tFCantNodos.getText().toString());
 					cambiarVentana();
 				} else
 					JOptionPane.showMessageDialog(null, "INGRESE UN VALOR PARA CONTINUAR");
@@ -64,18 +64,18 @@ public class VistaBienvenida {
 	}
 	
 	private void asignarFondo(){
-		lblFondo = new JLabel("");
-		lblFondo.setBounds(0, 0, 1000, 800);
-		ventanaBienvenida.getContentPane().add(lblFondo);
+		_lblFondo = new JLabel("");
+		_lblFondo.setBounds(0, 0, 1000, 800);
+		_ventanaBienvenida.getContentPane().add(_lblFondo);
 		
-		lblFondo.setIcon(new ImageIcon(VistaBienvenida.class.getResource("/interfaz/INICIO.png")));
+		_lblFondo.setIcon(new ImageIcon(VistaBienvenida.class.getResource("/interfaz/INICIO.png")));
 	}
 
 	private void cambiarVentana() {
-		ventanaGrafo = new VistaGrafo();
-		ventanaBienvenida.setVisible(false);
-		ventanaGrafo.setVisible(true);
-		ventanaGrafo.setResizable(false);
+		_ventanaGrafo = new VistaGrafo();
+		_ventanaBienvenida.setVisible(false);
+		_ventanaGrafo.setVisible(true);
+		_ventanaGrafo.setResizable(false);
 	}
 	
 	private void limitarInputUsuario(JTextField tf) {
@@ -84,7 +84,7 @@ public class VistaBienvenida {
 				if((e.getKeyChar() < '0') || (e.getKeyChar() > '9') && (e.getKeyChar() != '\b')){
 					e.consume(); 
 				} else {
-					btnEnviar.setEnabled(true);
+					_btnEnviar.setEnabled(true);
 					if (tf.getText().length() >= 7)
 						e.consume();
 				}
@@ -93,10 +93,10 @@ public class VistaBienvenida {
 	}
 	
 	public TextoTranslucido getTp() {
-		return textoTranslucido;
+		return _textoTranslucido;
 	}
 
 	public void setTextoTranslucido(TextoTranslucido tt) {
-		this.textoTranslucido = tt;
+		this._textoTranslucido = tt;
 	}
 }
