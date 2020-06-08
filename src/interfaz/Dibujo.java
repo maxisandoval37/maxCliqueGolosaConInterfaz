@@ -13,30 +13,28 @@ public class Dibujo {
 
 		if (e.getX1() > e.getX2() && e.getY1() > e.getY2()) {
 			g.drawString(e.getNombre(), e.getX1() - Math.abs((e.getX1() - e.getX2()) / 2),
-			e.getY1() - Math.abs((e.getY1() - e.getY2()) / 2));
+					e.getY1() - Math.abs((e.getY1() - e.getY2()) / 2));
 		}
 		if (e.getX1() < e.getX2() && e.getY1() < e.getY2()) {
 			g.drawString(e.getNombre(), e.getX2() - Math.abs((e.getX1() - e.getX2()) / 2),
-			e.getY2() - Math.abs((e.getY1() - e.getY2()) / 2));
+					e.getY2() - Math.abs((e.getY1() - e.getY2()) / 2));
 		}
 
 		if (e.getX1() > e.getX2() && e.getY1() < e.getY2()) {
 			g.drawString(e.getNombre(), e.getX1() - Math.abs((e.getX1() - e.getX2()) / 2),
-			e.getY2() - Math.abs((e.getY1() - e.getY2()) / 2));
+					e.getY2() - Math.abs((e.getY1() - e.getY2()) / 2));
 		}
 
 		if (e.getX1() < e.getX2() && e.getY1() > e.getY2()) {
 			g.drawString(e.getNombre(), e.getX2() - Math.abs((e.getX1() - e.getX2()) / 2),
-			e.getY1() - Math.abs((e.getY1() - e.getY2()) / 2));
+					e.getY1() - Math.abs((e.getY1() - e.getY2()) / 2));
 		}
 	}
-	
-	public static void pintarNodo(Graphics g, Nodo n, int limiteX, int limiteY, Color color) {
 
-		if (n.getX() < limiteX && n.getY() < limiteY) {
+	public static void pintarNodo(Graphics g, Nodo n,Color color) {
 			g.setColor(color);
 			g.drawOval(n.getX() - Nodo.diametroCirculo / 2, n.getY() - Nodo.diametroCirculo / 2, 
-			Nodo.diametroCirculo, Nodo.diametroCirculo);
+			Nodo.diametroCirculo,Nodo.diametroCirculo);
 
 			if (n.getPeso() == null)
 				g.drawString("", n.getX(), n.getY());
@@ -44,6 +42,6 @@ public class Dibujo {
 				g.drawString("P(" + n.getPeso() + ") // i:(" + n.getIndiceNodo() + ")",
 				n.getX() - Nodo.diametroCirculo / 3, n.getY());
 		}
-	}
+	
 
 }

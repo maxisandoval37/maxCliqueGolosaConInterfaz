@@ -2,8 +2,7 @@ package negocio;
 
 import java.util.ArrayList;
 
-
-public class Clique  {
+public class Clique {
 
 	ArrayList<Nodo> _listaNodo;
 	private int _peso;
@@ -11,11 +10,9 @@ public class Clique  {
 	public Clique() {
 		_listaNodo = new ArrayList<Nodo>();
 		this._peso = 0;
-
 	}
 
 	public void agregarNodoAClique(Nodo nodo, Grafo grafo) {
-
 		if (!_listaNodo.contains(nodo) && esVecinodeTodos(nodo, grafo)) {
 			_listaNodo.add(nodo);
 			this._peso = (this.getPeso() + nodo.getPeso());
@@ -29,9 +26,9 @@ public class Clique  {
 		}
 		return ret;
 	}
-	
+
 	public Clique cliqueConMasPeso(Clique otra) {
-		if (this._peso>otra.getPeso()) {
+		if (this._peso > otra.getPeso()) {
 			return this;
 		}
 		return otra;

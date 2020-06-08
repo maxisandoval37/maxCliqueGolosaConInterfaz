@@ -2,14 +2,13 @@ package negocio;
 
 public class Nodo {
 
-	private int x,y;
-	public static final int diametroCirculo=100;
+	private int x, y;
+	public static final int diametroCirculo = 100;
 	private Integer _peso;
 	private int _indice_nodo;
 	private int _cantidadVecinos;
-	
 
-	public Nodo(int indice_nodo,int x, int y,int peso) {
+	public Nodo(int indice_nodo, int x, int y, int peso) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -17,7 +16,7 @@ public class Nodo {
 		this.setPeso(peso);
 		this._cantidadVecinos = 0;
 	}
-	
+
 	public int getX() {
 		return x;
 	}
@@ -51,12 +50,11 @@ public class Nodo {
 	}
 
 	private void setCantidadVecinos(int i) {
-		this._cantidadVecinos =  i;
+		this._cantidadVecinos = i;
 	}
 
 	public int getCantidadVecinos() {
 		return _cantidadVecinos;
 	}
 
-	
 }

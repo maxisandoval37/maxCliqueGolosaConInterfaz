@@ -1,7 +1,7 @@
 package negocio;
 
 public class ProblemaCliqueMaxima {
-	
+
 	private SolverGoloso _solucionPorPeso;
 	private SolverGoloso _solucionPorGrado;
 	private ComparadorPorPeso _comparaPorPeso;

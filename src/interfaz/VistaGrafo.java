@@ -1,5 +1,4 @@
 package interfaz;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -20,16 +19,17 @@ public class VistaGrafo extends JFrame implements MouseListener {
 	private JButton _botonResolver;
 	private JButton _botonLimpiar;
 	public JFrame _ventanaGrafo;
-	private Color _colorNodos;
+	private Color _colorObjetos;
 	public Grafo _grafo;
 	private JLabel _lblPesoTotalClique;
 	private JLabel _lblGradoClique;
 	private JLabel _lblTimepoEmpleadoClique;
 	private ProblemaCliqueMaxima _solucionCliqueMax;
+	private boolean _interruptorMouse = true;
 
 	public VistaGrafo() {
 		initialize();
-		_colorNodos = Color.black;
+		_colorObjetos = Color.black;
 		_grafo = new Grafo(VistaBienvenida._cantidadNodosLimite);
 		this._vectorNodos = new Vector<>();
 		this._vectorAristas = new Vector<>();
@@ -53,29 +53,34 @@ public class VistaGrafo extends JFrame implements MouseListener {
 	public void paint(Graphics g) {
 		super.paint(g);
 		for (Nodo nodo : _vectorNodos) {
-			Dibujo.pintarNodo(g, nodo, _panelDibujar.getWidth(), _panelDibujar.getHeight(), _colorNodos);
+			Dibujo.pintarNodo(g,nodo,_colorObjetos);
 		}
 		for (Arista enlaces : _vectorAristas) {
 			Dibujo.pintarEnlance(g, enlaces);
 		}
-		_colorNodos = Color.black;
+		_colorObjetos = Color.black;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
-		if (e.getButton() == MouseEvent.BUTTON1) {// nodo
-			String inputPesoNodo = JOptionPane.showInputDialog("INGRESE UN PESO PARA EL NODO: ") + "0";
-			if (inputPesoNodo != null && sonTodosNumeros(inputPesoNodo)) {
-				if (_indiceAuxCrearNodo + 1 < VistaBienvenida._cantidadNodosLimite) {
-					cargarNodo(e, Integer.parseInt(inputPesoNodo));
-				} else
-					seExcedioLimiteNodos();
-			} else
-				JOptionPane.showMessageDialog(null, "DEBE INGRESAR UN DATO NUMERICO PARA EL NODO");
+		if (_interruptorMouse) {
+			if (_panelDibujar.getWidth() > e.getX() && _panelDibujar.getHeight() > e.getY()) {
+			if (e.getButton() == MouseEvent.BUTTON1) {// nodo
+					String inputPesoNodo = JOptionPane.showInputDialog("INGRESE UN PESO PARA EL NODO: ") + "0";
+					if (inputPesoNodo != null && sonTodosNumeros(inputPesoNodo)) {
+						if (_indiceAuxCrearNodo + 1 < VistaBienvenida._cantidadNodosLimite)
+							cargarNodo(e, Integer.parseInt(inputPesoNodo));
+						 else
+							seExcedioLimiteNodos();
+					} else
+						JOptionPane.showMessageDialog(null, "DEBE INGRESAR UN DATO NUMERICO PARA EL NODO");
+				} 
+				if (e.getButton() == MouseEvent.BUTTON3)// arista
+					accionClickDerecho(e);
+			}
+			else
+				e.consume();
 		}
-		if (e.getButton() == MouseEvent.BUTTON3)// arista
-			accionClickDerecho(e);
 	}
 
 	private void cargarNodo(MouseEvent e, int pesoNodo) {
@@ -94,9 +99,8 @@ public class VistaGrafo extends JFrame implements MouseListener {
 	private void accionClickDerecho(MouseEvent e) {
 		for (int i = 0; i < _vectorNodos.size(); i++) {
 
-			if (new Rectangle(_vectorNodos.get(i).getX() - Nodo.diametroCirculo / 2,
-					_vectorNodos.get(i).getY() - Nodo.diametroCirculo / 2, Nodo.diametroCirculo, Nodo.diametroCirculo)
-							.contains(e.getPoint())) {
+			if (new Rectangle(_vectorNodos.get(i).getX() - Nodo.diametroCirculo / 2,_vectorNodos.get(i).getY() - 
+			Nodo.diametroCirculo / 2, Nodo.diametroCirculo, Nodo.diametroCirculo).contains(e.getPoint())) {
 				if (p1 == null)
 					crearPunto1Arista(i);
 				else {
@@ -111,9 +115,7 @@ public class VistaGrafo extends JFrame implements MouseListener {
 								_grafo.agregarNodoAindiceConVecinos(_grafo.getListaNodos().get(_indice1auxNodo),
 										_grafo.getListaNodos().get(_indice2auxNodo));
 							}
-						}
-						p1 = null;
-						p2 = null;
+						}p1 = null;p2 = null;
 					} else
 						JOptionPane.showMessageDialog(null, "DEBE INGRESAR UN NOMBRE PARA LA ARISTA");
 				}
@@ -126,9 +128,8 @@ public class VistaGrafo extends JFrame implements MouseListener {
 		_indice1auxNodo = _vectorNodos.get(i).getIndiceNodo();
 	}
 
-	private void crearPunto2Arista(int i) {
-		p2 = new Point(_vectorNodos.get(i).getX(), _vectorNodos.get(i).getY());
-	}
+	private void crearPunto2Arista(int i) 
+	{p2 = new Point(_vectorNodos.get(i).getX(), _vectorNodos.get(i).getY());}
 
 	private void inicializarPanelBotones() {
 		_panelBotones = new JPanel();
@@ -149,7 +150,7 @@ public class VistaGrafo extends JFrame implements MouseListener {
 	private void inicializarBotonResolver() {
 		_panelBotones.setLayout(null);
 		_botonResolver = new JButton("Resolver clique max peso");
-		_botonResolver.setBounds(24, 5, 153, 23);
+		_botonResolver.setBounds(15, 5, 180, 23);
 		_panelBotones.add(_botonResolver);
 		accionBotonResolver();
 	}
@@ -157,7 +158,7 @@ public class VistaGrafo extends JFrame implements MouseListener {
 	private void inicializarBotonLimpiar() {
 		_panelBotones.setLayout(null);
 		_botonLimpiar = new JButton("Limpiar dibujos y Grafo");
-		_botonLimpiar.setBounds(24, 700, 153, 23);
+		_botonLimpiar.setBounds(15, 700, 170, 23);
 		_panelBotones.add(_botonLimpiar);
 		accionBotonLimpiar();
 	}
@@ -166,8 +167,7 @@ public class VistaGrafo extends JFrame implements MouseListener {
 		_botonLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				resetearGrafo();
-				
-				
+				_interruptorMouse = true;
 			}
 		});
 	}
@@ -180,10 +180,11 @@ public class VistaGrafo extends JFrame implements MouseListener {
 				_vectorAristas.clear();
 				repaint();
 				actualizarInfoLabelsClique(_solucionCliqueMax.get_cliqueConMasPeso().getPeso(),
-						_solucionCliqueMax.get_cliqueConMasPeso().getGrado(), _solucionCliqueMax.getTiempoFinal());
-
+				_solucionCliqueMax.get_cliqueConMasPeso().getGrado(), _solucionCliqueMax.getTiempoFinal());
 				repintarObjetos(_solucionCliqueMax.get_cliqueConMasPeso().getListaNodo());
 
+				_solucionCliqueMax = new ProblemaCliqueMaxima(_grafo);
+				_interruptorMouse = false;
 			}
 		});
 	}
@@ -207,36 +208,32 @@ public class VistaGrafo extends JFrame implements MouseListener {
 	}
 
 	private void actualizarInfoLabelsClique(Integer pesoClique, Integer gradoClique, long tiempoEjecu) {
-		String infoPeso = "<html><body>PESO TOTAL MAX CLIQUE:<center><h1><br>" + pesoClique.toString()
-				+ "</br></h1></center></body></html>";
+		String infoPeso="<html><body>PESO TOTAL MAX CLIQUE:<center><h1><br>" + pesoClique.toString()+"</br></h1></center></body></html>";
 		_lblPesoTotalClique.setText(infoPeso);
 
-		String infoGrado = "<html><body>GRADO DE MAX CLIQUE:<center><h1><br>" + gradoClique.toString()
-				+ "</br></h1></center></body></html>";
+		String infoGrado="<html><body>GRADO DE MAX CLIQUE:<center><h1><br>"+gradoClique.toString()+"</br></h1></center></body></html>";
 		_lblGradoClique.setText(infoGrado);
 
-		String infoTiempo = "<html><body>TIEMPO EMPLEADO(mili-seg):<center><h1><br>" + Long.toString(tiempoEjecu)
-				+ "'</br></h1></center></body></html>";
+		String infoTiempo = "<html><body>TIEMPO EMPLEADO(mili-seg):<center><h1><br>"+Long.toString(tiempoEjecu)+"'</br></h1></center></body></html>";
 		_lblTimepoEmpleadoClique.setText(infoTiempo);
 	}
 
 	private void repintarObjetos(ArrayList<Nodo> objetos) {
 		for (int i = 0; i < objetos.size(); i++) {
 			for (int j = 0; j < objetos.size(); j++) {
-				_colorNodos = Color.blue;
+				_colorObjetos = Color.blue;
 				_vectorNodos.add(objetos.get(i));
-				_vectorAristas.add(new Arista(objetos.get(i).getX(), objetos.get(i).getY(), objetos.get(j).getX(),
-						objetos.get(j).getY(), ""));
+				_vectorAristas.add(new Arista(objetos.get(i).getX(), objetos.get(i).getY(), 
+				objetos.get(j).getX(),objetos.get(j).getY(), ""));
 			}
-		}
-		repaint();
+		}repaint();
 	}
 
 	private void agregarAristas(int ari1, int ari2) {
 		try {
 			_grafo.agregarArista(ari1, ari2);
 			repaint();
-		} catch (Exception e) {
+		} catch (Exception e){
 			JOptionPane.showMessageDialog(null, e.getMessage() + " " + _grafo.capacidadDeAristas());
 			resetearGrafo();
 		}
@@ -246,9 +243,8 @@ public class VistaGrafo extends JFrame implements MouseListener {
 		try {
 			Integer.parseInt(cad);
 			return true;
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
+		} catch (NumberFormatException nfe) 
+			{return false;}
 	}
 
 	private void resetearGrafo() {
