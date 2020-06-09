@@ -256,6 +256,9 @@ public class VistaGrafo extends JFrame implements MouseListener {
 		_indice2auxNodo = -1;
 		_indiceAuxCrearNodo = -1;
 		_solucionCliqueMax = new ProblemaCliqueMaxima(_grafo);
+		_lblPesoTotalClique.setText("PESO TOTAL MAX CLIQUE:");
+		_lblGradoClique.setText("GRADO DE MAX CLIQUE:");
+		_lblTimepoEmpleadoClique.setText("TIEMPO EMPLEADO:");
 	}
 
 	@Override
